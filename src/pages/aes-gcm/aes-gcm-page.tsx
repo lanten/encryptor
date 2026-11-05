@@ -1,5 +1,5 @@
 import { useRef, useState, type ReactNode } from "react"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -138,7 +138,7 @@ export function AesGcmPage() {
 
   return (
     <>
-      <Card className="mx-auto w-full max-w-160">
+      <Card className="relative mx-auto w-full max-w-160">
         <CardHeader>
           <CardTitle>AES-256-GCM</CardTitle>
           <CardDescription>
@@ -242,10 +242,15 @@ export function AesGcmPage() {
               解密
             </Button>
           </div>
-          {deriving ? (
-            <p className="text-sm text-muted-foreground">正在派生密钥…</p>
-          ) : null}
         </CardContent>
+        {deriving ? (
+          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/60">
+            <Loader2
+              className="size-6 animate-spin text-muted-foreground"
+              aria-hidden="true"
+            />
+          </div>
+        ) : null}
       </Card>
       <ResultDialog
         result={result}
