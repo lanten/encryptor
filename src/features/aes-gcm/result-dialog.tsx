@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -104,28 +104,18 @@ function FieldList({ fields }: { fields: string[][] }) {
 }
 
 function CopyFooter({ text, label }: { text: string; label: string }) {
-  const [failed, setFailed] = useState(false)
+  function handleCopy() {
+    void copyText(text).then(
+      () => toast.success("已复制"),
+      () => toast.error("复制失败"),
+    )
+  }
 
   return (
     <DialogFooter>
-      <div className="flex w-full flex-col items-end gap-2">
-        <Button
-          type="button"
-          onClick={() => {
-            void copyText(text).then(
-              () => setFailed(false),
-              () => setFailed(true),
-            )
-          }}
-        >
-          {label}
-        </Button>
-        {failed ? (
-          <p className="text-sm text-destructive" role="alert">
-            复制失败
-          </p>
-        ) : null}
-      </div>
+      <Button type="button" onClick={handleCopy}>
+        {label}
+      </Button>
     </DialogFooter>
   )
 }

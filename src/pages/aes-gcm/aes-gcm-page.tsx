@@ -1,5 +1,6 @@
 import { useRef, useState, type ReactNode } from "react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Eye, EyeOff } from "lucide-react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -57,8 +58,8 @@ export function AesGcmPage() {
   const [salt, setSalt] = useState("")
   const [additionalData, setAdditionalData] = useState("")
   const [encoding, setEncoding] = useState<Encoding>("Hex")
+  const [showPassword, setShowPassword] = useState(false)
   const [status, setStatus] = useState<"idle" | "deriving">("idle")
-  const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<EncryptView | DecryptView | null>(null)
   const busy = useRef(false)
 
@@ -69,13 +70,12 @@ export function AesGcmPage() {
     if (busy.current) return
     busy.current = true
     setStatus("deriving")
-    setError(null)
     setResult(null)
     await afterPaint()
     try {
       await task()
     } catch (caught) {
-      setError(messageFrom(caught, fallback))
+      toast.error(messageFrom(caught, fallback))
     } finally {
       busy.current = false
       setStatus("idle")
@@ -156,14 +156,29 @@ export function AesGcmPage() {
             />
           </Field>
           <Field label="密码" htmlFor="password">
-            <Input
-              id="password"
-              type="text"
-              value={password}
-              autoComplete="off"
-              spellCheck={false}
-              onChange={(event) => setPassword(event.target.value)}
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                autoComplete="off"
+                spellCheck={false}
+                onChange={(event) => setPassword(event.target.value)}
+                className="pr-9"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((visible) => !visible)}
+                aria-label={showPassword ? "隐藏密码" : "显示密码"}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+              >
+                {showPassword ? (
+                  <EyeOff className="size-4" />
+                ) : (
+                  <Eye className="size-4" />
+                )}
+              </button>
+            </div>
           </Field>
           <Field label="IV" htmlFor="iv" hint="留空则在加密时生成 12 字节">
             <Input
@@ -229,11 +244,6 @@ export function AesGcmPage() {
           </div>
           {deriving ? (
             <p className="text-sm text-muted-foreground">正在派生密钥…</p>
-          ) : null}
-          {error ? (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
           ) : null}
         </CardContent>
       </Card>

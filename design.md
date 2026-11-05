@@ -30,7 +30,7 @@
 
 不引入 React Router 框架模式、Next.js、状态库或表单库。本页是一次提交的命令式校验，受控输入足够。
 
-shadcn 只装本页会用到的组件：`button`、`input`、`textarea`、`label`、`select`、`dialog`、`card`、`alert`、`separator`。图标用 `lucide-react`，随 shadcn 安装，不手写 SVG 图标库。
+shadcn 只装本页会用到的组件：`button`、`input`、`textarea`、`label`、`select`、`dialog`、`card`、`separator`、`sonner`。图标用 `lucide-react`，随 shadcn 安装，不手写 SVG 图标库。
 
 ## 路由
 
@@ -174,7 +174,7 @@ shadcn `Dialog`。加密和解密共用一个组件，用结果类型区分内�
 | 字段 | 控件 | 说明 |
 | --- | --- | --- |
 | 明文 / 密文 | `Textarea` | 加密填原文，解密填密文 |
-| 密码 | `Input`，`type="text"` | 明文显示，便于核对，不使用密码遮罩 |
+| 密码 | `Input`，默认 `type="password"` | 右侧小眼睛图标切换显示/隐藏 |
 | IV | `Input` | 留空则加密时生成 |
 | 盐 | `Input` | 留空则加密时生成 |
 | 附加数据 | `Input` | 可选 |
@@ -182,7 +182,7 @@ shadcn `Dialog`。加密和解密共用一个组件，用结果类型区分内�
 
 编码字段下用一行说明：只作用于密文、IV、盐。
 
-主按钮一组：加密、解密。错误用 `Alert` 放在按钮下方，不用浏览器 `alert`。
+主按钮一组：加密、解密。表单校验和报错提示统一用 sonner toast，不用浏览器 `alert`。`<Toaster />` 挂在 `AppShell`，全站共享。
 
 ## 弹窗
 

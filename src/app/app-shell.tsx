@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router"
 import { homeNav, tools } from "@/app/nav"
+import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
 
 const links = [homeNav, ...tools.map(({ to, label }) => ({ to, label }))]
@@ -32,6 +33,7 @@ export function AppShell() {
       <main className="mx-auto max-w-3xl px-4 py-8">
         <Outlet />
       </main>
+      <Toaster position="top-center" />
     </div>
   )
 }
