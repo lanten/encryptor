@@ -1,5 +1,7 @@
 # 客户端加解密工具
 
+- 在线使用：<https://lanten.github.io/encryptor/>
+
 纯浏览器端的 AES-256-GCM 加解密工具。用 Argon2id 从密码派生密钥，再用 AES-256-GCM 加解密。明文、密码、IV、盐、附加数据全部在浏览器内处理，不上传任何内容。
 
 ## 功能
@@ -28,13 +30,13 @@ npm run dev
 
 ## 脚本
 
-| 命令 | 说明 |
-| --- | --- |
-| `npm run dev` | 启动开发服务器 |
-| `npm run build` | 类型检查并构建到 `dist/` |
-| `npm test` | 运行 vitest 测试 |
-| `npm run lint` | 运行 oxlint |
-| `npm run preview` | 本地预览构建产物 |
+| 命令              | 说明                     |
+| ----------------- | ------------------------ |
+| `npm run dev`     | 启动开发服务器           |
+| `npm run build`   | 类型检查并构建到 `dist/` |
+| `npm test`        | 运行 vitest 测试         |
+| `npm run lint`    | 运行 oxlint              |
+| `npm run preview` | 本地预览构建产物         |
 
 ## 使用
 
